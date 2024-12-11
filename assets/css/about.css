@@ -1,0 +1,982 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  --header-height: 3.5rem;
+
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  --white-color: hsl(0, 0%, 0%);
+  --black-color: hsl(0, 0%, 100%);
+
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  --body-font: "Montserrat Alternates", sans-serif;
+  --h1-font-size: 1.5rem;
+  --normal-font-size: .938rem;
+
+  /*========== Font weight ==========*/
+  --font-regular: 400;
+  --font-medium: 500;
+
+  /*========== z index ==========*/
+  --z-tooltip: 10;
+  --z-fixed: 100;
+
+  --max-width: 1200px;
+  --white-light: rgba(255, 255, 255, 0.5);
+  --alice-blue: #f8f9fa;
+  --carribean-green: #924DBF;
+  --gray: #ededed;
+}
+
+
+
+
+/*========== Responsive typography ==========*/
+@media screen and (min-width: 1150px) {
+  :root {
+    --normal-font-size: 1rem;
+  }
+
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: var(--body-font);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: white;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/*=============== REUSABLE CSS CLASSES ===============*/
+.container {
+  max-width: 1120px;
+  margin-inline: 1.5rem;
+}
+
+/*=============== HEADER & NAV ===============*/
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: var(--black-color);
+  z-index: var(--z-fixed);
+}
+
+.nav {
+  position: relative;
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__logo {
+  color: var(--white-color);
+  font-weight: var(--font-medium);
+}
+
+.nav__close, 
+.nav__toggle {
+  display: flex;
+  color: var(--white-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Navigation for mobile devices */
+@media screen and (max-width: 1150px) {
+  .nav__menu {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    background-color: var(--black-color);
+    width: 100%;
+    height: 100%;
+    padding: 6rem 3.5rem 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: left .4s;
+    z-index: 1000;
+  }
+
+  .nav__item {
+    transform: translateX(-150px);
+    visibility: hidden;
+    transition: transform .4s ease-out, visibility .4s;
+  }
+
+  .nav__item:nth-child(1) {
+    transition-delay: .1s;
+  }
+  .nav__item:nth-child(2) {
+    transition-delay: .2s;
+  }
+  .nav__item:nth-child(3) {
+    transition-delay: .3s;
+  }
+  .nav__item:nth-child(4) {
+    transition-delay: .4s;
+  }
+  .nav__item:nth-child(5) {
+    transition-delay: .5s;
+  }
+  
+  .shopping img{
+    margin-left: 200px;
+  }
+
+  .shopping span{
+    margin-left: 35px;
+  }
+}
+
+.nav__list, 
+.nav__social {
+  display: flex;
+}
+
+.nav__list {
+  flex-direction: column;
+  row-gap: 3rem;
+}
+
+.nav__link {
+  position: relative;
+  color: var(--white-color);
+  font-size: var(--h1-font-size);
+  font-weight: var(--font-medium);
+  display: inline-flex;
+  align-items: center;
+  transition: opacity .4s;
+}
+
+.nav__link i {
+  font-size: 2rem;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .4s, visibility .4s;
+}
+
+.nav__link span {
+  position: relative;
+  transition: margin .4s;
+}
+
+.nav__link span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background-color: var(--white-color);
+  transition: width .4s ease-out;
+}
+
+/* Animation link on hover */
+.nav__link:hover span {
+  margin-left: 2.5rem;
+}
+
+.nav__link:hover i {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav__link:hover span::after {
+  width: 100%;
+}
+
+/* Sibling fade animation */
+.nav__list:has(.nav__link:hover) .nav__link:not(:hover) {
+  opacity: .4;
+}
+
+.nav__close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+}
+
+.nav__social {
+  column-gap: 1rem;
+}
+
+.nav__social-link {
+  color: var(--white-color);
+  font-size: 1.5rem;
+  transition: transform .4s;
+}
+
+.nav__social-link:hover {
+  transform: translateY(-.25rem);
+}
+
+/* Show menu */
+.show-menu {
+  left: 0;
+}
+
+/* Animation link when displaying menu */
+.show-menu .nav__item {
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For large devices */
+@media screen and (min-width: 1150px) {
+  .container {
+    margin-inline: auto;
+  }
+
+  .nav {
+    height: calc(var(--header-height) + 2rem);
+  }
+
+  .nav__toggle, 
+  .nav__close {
+    display: none;
+  }
+
+  .nav__link {
+    font-size: var(--normal-font-size);
+  }
+
+  .nav__link i {
+    font-size: 1.5rem;
+  }
+
+  .nav__list {
+    flex-direction: row;
+    column-gap: 3.5rem;
+  }
+
+  .nav__menu {
+    display: flex;
+    align-items: center;
+    column-gap: 3.5rem;
+  }
+  
+  .header__content{
+    margin-right: 10rem;
+  }
+  
+}
+
+
+.section__container {
+    max-width: var(--max-width);
+    margin: auto;
+    padding: 5rem 1rem;
+  }
+  
+  .section__header {
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    font-family: var(--header-font);
+    color: purple;
+  }
+  
+  .section__description {
+    font-size: 1.1rem;
+    color: var(--text-light);
+  }
+  
+  
+  
+  img {
+    display: flex;
+    width: 100%;
+  }
+  
+  a {
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  html,
+  body {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+  }
+  
+  
+  
+  .header__content {
+    grid-area: 1/1/2/2;
+    display: flex;
+    align-items: center;
+  }
+  
+  .header__content > div {
+    max-width: 500px;
+    padding: 4rem 1rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+  }
+  
+  
+  .about__header {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .about__header .section__description {
+    max-width: 600px;
+  }
+  
+  
+  
+  .about__content {
+    margin-top: 2rem;
+    display: grid;
+    gap: 2rem;
+  }
+  
+  .about__grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .about__image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.20); /* Bayangan lembut */
+    border-radius: 8px; /* Opsional */
+    animation: slideInFromRight 1s ease-out forwards; /* Tambahkan forwards */
+  }
+  
+  .about__image img:hover {
+    transform: scale(1.05); /* Opsional: Perbesar sedikit saat hover */
+  }
+  
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(100%); /* Mulai dari luar layar (kanan) */
+      opacity: 0; /* Tidak terlihat */
+    }
+    to {
+      transform: translateX(0); /* Posisi normal */
+      opacity: 1; /* Sepenuhnya terlihat */
+    }
+  }
+  
+  
+  .about__card h3 {
+    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: rgb(0, 0, 0);
+  }
+  
+  .about__card h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgb(68, 6, 68);
+  }
+  
+  .about__card p {
+    color: var(--text-light);
+  }
+  
+  .product__grid {
+    margin-top: 4rem;
+    display: grid;
+    gap: 2rem;
+  }
+  
+  .product__card {
+    position: relative;
+    isolation: isolate;
+    padding: 2rem;
+  }
+  
+  .product__card::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-color: var(--extra-light);
+    z-index: -1;
+    transition: 0.3s;
+  }
+  
+
+  
+  
+  @media (width > 540px) {
+    .deals__container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .about__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .product__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .footer__container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (width > 768px) {
+    nav {
+      position: static;
+      padding: 2rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+  
+    .nav__header {
+      flex: 1;
+      padding: 0;
+      background-color: transparent;
+    }
+  
+    .nav__menu__btn {
+      display: none;
+    }
+  
+    .nav__logo .logo {
+      color: var(--primary-color);
+    }
+  
+    .nav__links {
+      position: static;
+      padding: 0;
+      width: fit-content;
+      flex-direction: row;
+      gap: 3rem;
+      background-color: transparent;
+      transform: none;
+    }
+  
+    .nav__links a {
+      color: var(--text-dark);
+    }
+  
+    .nav__links a:hover {
+      color: var(--primary-color);
+    }
+  
+    .nav__search {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+  
+    .nav__search input {
+      padding-block: 5px;
+      outline: none;
+      border: none;
+      width: 0;
+      font-size: 1rem;
+      color: var(--text-dark);
+      border-bottom: 1px solid var(--text-light);
+      transition: 0.3s;
+    }
+  
+    .nav__search.open input {
+      width: 100%;
+      max-width: 15rem;
+    }
+  
+    .nav__search span {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+  
+    .header__container {
+      padding-top: 0;
+    }
+  
+    .deals__container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  
+    .deals__card:nth-child(1) {
+      grid-column: 1/4;
+    }
+  
+    .about__header {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    .about__content {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+    }
+  
+    .about__image {
+      grid-area: 1/2/2/3;
+    }
+  
+    .product__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  
+    .client__card {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: center;
+      text-align: left;
+    }
+  
+    .footer__container {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  @media (width > 1024px) {
+    .deals__container {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  
+    .deals__card:nth-child(1) {
+      grid-column: unset;
+    }
+  
+    .about__grid {
+      gap: 4rem 2rem;
+    }
+  }
+  
+
+  .container{
+    transition: 0.5s;
+  }
+  .shopping{
+    position: relative;
+  }
+  .shopping img{
+    width: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  .shopping span{
+    background: red;
+    border-radius: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    position: absolute;
+    top: -5px;
+    left: 80%;
+    padding: 3px 10px;
+  }
+  .card{
+    position: fixed;
+    top:0;
+    left: 100%;
+    width: 500px;
+    background-color: #ffffff;
+    height: 100vh;
+    transition: 0.5s;
+    z-index: 1000;
+  }
+  .active .card{
+    left: calc(100% - 500px);
+  }
+  .active .container{
+   transform: translateX(-200px);
+  }
+  .card h1{
+    color: #0f0e09;
+    font-weight: 100;
+    margin: 0;
+    padding: 0 20px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+  }
+  .card .checkOut{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  
+  }
+  .card .checkOut div{
+    background-color: #E8BC0E;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .card .checkOut div:nth-child(2){
+    background-color: #1C1F25;
+    color: #fff;
+  }
+  .listCard li{
+    display: grid;
+    grid-template-columns: 100px repeat(3, 1fr);
+    color: #000000;
+    row-gap: 10px;
+  }
+  .listCard li div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .listCard li img{
+    width: 90%;
+  }
+  .listCard li button{
+    background-color: #fff5;
+    border: none;
+  }
+  .listCard .count{
+    margin: 0 10px;
+  }
+  
+  .card .checkoutButton {
+    background-color: #11171d; /* Ganti warna latar belakang tombol */
+    color: #FFFFFF; /* Ganti warna font tombol */
+    border: none; /* Hilangkan border tombol */
+    padding: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Animasi perubahan warna */
+  }
+  
+  /* Efek hover untuk tombol Checkout */
+  .card .checkoutButton:hover {
+    background-color: #2c3035; /* Warna latar saat hover */
+    color: #e0e0e0; /* Warna teks saat hover */
+  }
+  
+  .shopping img:hover {
+    transform: translateY(-5px); /* Mengangkat gambar ke atas */
+  }
+  
+.select-item {
+    margin-right: 10px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+/* Sticky navbar */
+/* Membuat nav tetap berada di atas dan tidak menggeser elemen lain */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding: 10px 20px;
+}
+
+/* Agar menu navigasi tetap di kiri */
+.nav__menu {
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+  width: 150%;
+}
+
+/* Membuat shopping tetap di kanan atas dengan posisi fixed */
+.shopping {
+  position: fixed; /* Agar keranjang tetap melayang di kanan atas */
+  top: 20px; /* Jarak dari atas */
+  right: 20px; /* Jarak dari kanan */
+  z-index: 1000; /* Agar berada di atas elemen lain */
+  background-color: #fff;
+  border-radius: 50%; /* Membuat keranjang berbentuk bulat */
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Menempatkan jumlah item dalam keranjang di atas gambar */
+.shopping .quantity {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 12px;
+  font-size: 14px;
+}
+
+
+/* Membuat logo sedikit lebih ke kanan */
+.nav__logo {
+  margin-left: auto; /* Memindahkan logo ke kanan */
+  padding-right: 250px; /* Menambahkan sedikit ruang ke kanan */
+}
+
+/* Membuat menu navigasi lebih ke kiri */
+.nav__menu {
+  margin-right: auto; /* Memindahkan menu ke kiri */
+  padding-left: 215px; /* Menambahkan sedikit ruang ke kiri */
+  display: flex; /* Memastikan menu tetap teratur dalam satu baris */
+}
+
+body .footer {
+  z-index: 1;
+  --footer-background: rgb(149, 73, 159);
+  display: grid;
+  position: relative;
+  grid-area: footer;
+  min-height: 12rem;
+  margin-top: 100px;
+}
+
+body .footer .bubbles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1rem;
+  background: var(--footer-background);
+  filter: url("#blob");
+}
+
+body .footer .bubbles .bubble {
+  position: absolute;
+  left: var(--position, 50%);
+  background: var(--footer-background);
+  border-radius: 100%;
+  -webkit-animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s), bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+  animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s), bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+  transform: translate(-50%, 100%);
+}
+
+body .footer .content {
+  padding: 2rem 1rem 2rem;
+  background: var(--footer-background);
+  z-index: 2;
+}
+
+.footer .content .container {
+  max-width: 768px;
+  margin: 0 auto;
+  display: flex; /* Ubah dari grid ke flexbox */
+  flex-direction: column; /* Tata letak vertikal */
+  align-items: center; /* Pusatkan konten secara horizontal */
+  gap: 1.5rem; /* Tambahkan jarak antar elemen */
+  color: #fff;
+}
+
+.content h2 {
+  margin-bottom: .25rem;
+  font-size: 2.25rem;
+}
+
+.content span {
+  font-size: .875rem;
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: row;
+  column-gap: 2rem;
+  transition: all 150ms ease-out;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.footer__link {
+  font-size: 1rem;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.footer__link:hover {
+  color: #e0e0e0; /* Ubah warna saat hover */
+}
+
+
+.footer__links .footer__link {
+  transition: all 150ms ease-out;
+  display: inline-block;
+}
+
+.footer__link:hover:after {
+  width: 100%;
+}
+
+.footer__link:after {
+  content: '';
+  display: block;
+  margin: auto;
+  height: 2px;
+  width: 0px;
+  background-color: #fff;
+  transition: width .25s ease-out;
+}
+
+.footer__social:hover {
+  opacity: 0.8;
+}
+
+.footer__copy {
+  text-align: center;
+  background: rgb(149, 73, 159);
+  font-size: .875rem;
+  text-align: center;
+  color: #dcdcdc;
+  padding: 3rem 0 2rem;
+}
+
+@-webkit-keyframes bubble-size {
+
+  0%,
+  75% {
+      width: var(--size, 4rem);
+      height: var(--size, 4rem);
+  }
+
+  100% {
+      width: 0rem;
+      height: 0rem;
+  }
+}
+
+@keyframes bubble-size {
+
+  0%,
+  75% {
+      width: var(--size, 4rem);
+      height: var(--size, 4rem);
+  }
+
+  100% {
+      width: 0rem;
+      height: 0rem;
+  }
+}
+
+@-webkit-keyframes bubble-move {
+  0% {
+      bottom: -4rem;
+  }
+
+  100% {
+      bottom: var(--distance, 10rem);
+  }
+}
+
+@keyframes bubble-move {
+  0% {
+      bottom: -4rem;
+  }
+
+  100% {
+      bottom: var(--distance, 10rem);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .footer .content {
+      padding: 0 1.5rem;
+  }
+
+  .footer .content .container {
+      grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content h2 {
+      font-size: 1.5rem;
+  }
+
+  .content span {
+      font-size: .813rem;
+  }
+
+  .footer__links {
+      flex-direction: column;
+      row-gap: 1.5rem;
+  }
+
+  .footer__socials {
+      justify-self: flex-start;
+  }
+}
+
+@media screen and (max-width: 567px) {
+  .footer .content .container {
+      grid-template-columns: repeat(1, 1fr);
+      row-gap: 3.5rem;
+  }
+}
+
+.footer__socials {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.social-iconn {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icon__itemm {
+  list-style: none;
+}
+
+.social-icon__linkk {
+  font-size: 2rem;
+  color: #fff;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon__linkk:hover {
+  transform: translateY(-5px); /* Efek melayang */
+  color: #e0e0e0; /* Ubah warna saat hover */
+}
